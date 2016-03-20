@@ -1,11 +1,4 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
-
-
+library(ggplot2)
 ## Loading and preprocessing the data
 unzip(zipfile="activity.zip")
 activity.data <- read.csv("activity.csv", header = TRUE, colClasses = c ("numeric", "Date", "numeric"))
@@ -25,6 +18,7 @@ print(median(total.steps.per.day, na.rm=TRUE))
 average.steps <- aggregate(x=list(steps=activity.data$steps), by=list(interval=activity.data$interval),
                              FUN=mean, na.rm=TRUE)
 plot(average.steps, type= "l", xlab = "Interval", ylab = "Number of steps")
+
 average.steps[which.max(average.steps$steps),]$interval
 
 
@@ -57,8 +51,8 @@ activity.data.filled.weekend = activity.data.filled[activity.data.filled$weekday
 average.weekdays.steps = tapply(activity.data.filled.weekdays$steps, activity.data.filled.weekdays$interval, FUN=mean)
 average.weekend.steps = tapply(activity.data.filled.weekend$steps, activity.data.filled.weekend$interval, FUN=mean)
 
-    
-### Generate the panel plot
+
+## Generate the panel plot
 MakePlot = function() {
   par(mfrow = c(2, 1), mar = c(4, 5, 2, 2))
   plot(average.weekend.steps, type = "l", yaxt = "n", ylim = c(0, 
@@ -72,4 +66,3 @@ MakePlot = function() {
 }
 
 MakePlot()
-
